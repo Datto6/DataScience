@@ -10,7 +10,7 @@ for column in dados.select_dtypes(include=['number']):
 
 for column in dados.select_dtypes(include=['string']):
     plt.figure()
-    df=dados[column].groupby(dados[column]).count().sort_values(ascending=False)
+    df=dados[column].groupby(dados[column]).count()
     df.plot.bar()
     plt.style.use('seaborn-v0_8-pastel')
     plt.title('Distr '+column)
