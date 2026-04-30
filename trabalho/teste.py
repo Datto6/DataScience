@@ -8,22 +8,14 @@ for column in dados.select_dtypes(include=['number']):
     plt.figure()
     dados[column].plot(kind='hist', bins=20, title='Data Distribution', xlabel=column)
 
+for column in dados.select_dtypes(include=['string']):
+    plt.figure()
+    df=dados[column].groupby(dados[column]).count().sort_values(ascending=False)
+    df.plot.bar()
+    plt.style.use('seaborn-v0_8-pastel')
+    plt.title('Distr '+column)
+    plt.xlabel(column)
+    plt.ylabel('Numero de pessoas')
 
-df_sex = dados['Sex'].groupby(dados['Sex']).count().sort_values(ascending=False) #agrupa a coluna sexo pelos valores de sexo, conta freq, ordem descendente
-fig = plt.figure(dpi=90)
-df_sex.plot.bar()
-plt.style.use('seaborn-v0_8-pastel')
-plt.title('Distr Sexo')
-plt.xlabel('Sexo')
-plt.ylabel('Numero de pessoas')
-print(df_sex.head())
 
-df_risk = dados['Risk'].groupby(dados['Risk']).count().sort_values(ascending=False) #distribuicao de resultados desigual--> o que fazer?
-fig = plt.figure(dpi=90)
-df_risk.plot.bar()
-plt.style.use('seaborn-v0_8-pastel')
-plt.title('Distr Result')
-plt.xlabel('Result')
-plt.ylabel('Numero de pessoas')
-print(df_risk.head())
 plt.show()
