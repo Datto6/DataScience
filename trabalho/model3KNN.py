@@ -86,3 +86,15 @@ y_pred = clf.predict(X_test)
 
 acuracia = accuracy_score(y_test, y_pred)
 print(f'A acurácia do modelo foi de {acuracia*100:.2f}%')
+
+cm = confusion_matrix(y_test, y_pred)
+tree.plot_tree(clf)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+disp.plot(cmap='Blues')
+plt.title('Matriz de Confusão')
+
+
+importancia = pd.Series(clf.feature_importances_, index=X.columns).sort_values(ascending=False)
+print("Importância das colunas:\n", importancia)
+
+plt.show()

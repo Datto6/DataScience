@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 from sklearn import tree  # Arvore de decisão e plot tree
 from sklearn.metrics import accuracy_score   # Acurácia
@@ -23,16 +24,20 @@ imputer = KNNImputer(n_neighbors=5)
 
 df['Saving accounts']=encoder.fit_transform(df[['Saving accounts']]) #converts to numbers
 
+df['Saving accounts'] = df['Saving accounts'].replace(-1, np.nan)
+
 df['Saving accounts']=imputer.fit_transform(df[['Saving accounts']]) #takes care of missing values
-
-
+df['Saving accounts']+=1 #desloca tudo por um 
+df['Saving accounts']=df['Saving accounts'].replace(1,0) #bota 0 de volta pro 0. Agora tabela ta 0, 1.456, 2,3
+df['Saving accounts']=df['Saving accounts'].round() #arredonda, porque estamos falando de valores discretos, nao existe decimal
+print(df['Saving accounts'].value_counts())
 
 # Checking Account
 # encoder = OrdinalEncoder(handle_unknown='use_encoded_value',unknown_value= -1,categories=[['little', 'moderate', 'rich']]) 
 # imputer = KNNImputer(n_neighbors=5)
 # df['Checking account'] = encoder.fit_transform(df[['Checking account']]) #converts to numbers
 # df['Checking account'] = imputer.fit_transform(df[['Checking account']]) #takes care of missing values
-df=df.drop(columns=['Checking account'])
+df=df.drop('Checking account', axis=1)
 # Purpose
 purpose_encoder = OneHotEncoder(handle_unknown='ignore')
 

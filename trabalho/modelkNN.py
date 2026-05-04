@@ -31,11 +31,10 @@ df['Saving accounts']=encoder.fit_transform(df[['Saving accounts']]) #converts t
 df['Saving accounts'] = df['Saving accounts'].replace(-1, np.nan)
 
 df['Saving accounts']=imputer.fit_transform(df[['Saving accounts']]) #takes care of missing values
-df['Saving accounts']=df['Saving accounts'].round() #arredonda, porque estamos falando de valores discretos, nao existe decimal
 print(df['Saving accounts'].value_counts())
 
 
-# Checking Account
+# Checking Account--> Removido dessa vez
 print(df['Checking account'].value_counts())
 
 encoder = OrdinalEncoder(handle_unknown='use_encoded_value',unknown_value= -1,categories=[['little', 'moderate', 'rich']])
@@ -46,7 +45,6 @@ df['Checking account'] = encoder.fit_transform(df[['Checking account']]) #conver
 df['Checking account']=df['Checking account'].replace(-1, np.nan) #muda -1 para NaN, para kNN funcionar
 
 df['Checking account'] = imputer.fit_transform(df[['Checking account']]) #takes care of missing values
-df['Checking account']=df['Checking account'].round() #arredonda, porque estamos falando de valores discretos, nao existe decimal
 
 print(df['Checking account'].value_counts())
 # Purpose
