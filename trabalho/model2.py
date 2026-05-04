@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 from sklearn import tree  # Arvore de decisão e plot tree
 from sklearn.metrics import accuracy_score   # Acurácia
@@ -19,36 +18,21 @@ encoder = OrdinalEncoder(categories=[['free', 'rent', 'own']])
 df['Housing'] = encoder.fit_transform(df[['Housing']])
 
 # Saving Accounts
-print(df['Saving accounts'].value_counts())
-
 encoder = OrdinalEncoder(handle_unknown='use_encoded_value',unknown_value= -1,categories=[['little', 'moderate', 'quite rich', 'rich']])
-
-
 imputer = KNNImputer(n_neighbors=5)
 
 df['Saving accounts']=encoder.fit_transform(df[['Saving accounts']]) #converts to numbers
 
-df['Saving accounts'] = df['Saving accounts'].replace(-1, np.nan)
-
 df['Saving accounts']=imputer.fit_transform(df[['Saving accounts']]) #takes care of missing values
-df['Saving accounts']=df['Saving accounts'].round() #arredonda, porque estamos falando de valores discretos, nao existe decimal
-print(df['Saving accounts'].value_counts())
+
 
 
 # Checking Account
-print(df['Checking account'].value_counts())
-
-encoder = OrdinalEncoder(handle_unknown='use_encoded_value',unknown_value= -1,categories=[['little', 'moderate', 'rich']])
-imputer = KNNImputer(n_neighbors=5) #inicializando kNN e encoder
-
-df['Checking account'] = encoder.fit_transform(df[['Checking account']]) #converts to numbers
-
-df['Checking account']=df['Checking account'].replace(-1, np.nan) #muda -1 para NaN, para kNN funcionar
-
-df['Checking account'] = imputer.fit_transform(df[['Checking account']]) #takes care of missing values
-df['Checking account']=df['Checking account'].round() #arredonda, porque estamos falando de valores discretos, nao existe decimal
-
-print(df['Checking account'].value_counts())
+# encoder = OrdinalEncoder(handle_unknown='use_encoded_value',unknown_value= -1,categories=[['little', 'moderate', 'rich']]) 
+# imputer = KNNImputer(n_neighbors=5)
+# df['Checking account'] = encoder.fit_transform(df[['Checking account']]) #converts to numbers
+# df['Checking account'] = imputer.fit_transform(df[['Checking account']]) #takes care of missing values
+df=df.drop(columns=['Checking account'])
 # Purpose
 purpose_encoder = OneHotEncoder(handle_unknown='ignore')
 
