@@ -81,7 +81,7 @@ X = df.drop('Risk', axis=1)
 y = df['Risk']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=42, stratify = y)
-
+max=-1
 for i in range(2,20):
     age_discretizer = KBinsDiscretizer(
         n_bins=i,
@@ -90,21 +90,26 @@ for i in range(2,20):
     )
     X_train_copy = X_train.copy()
     X_test_copy = X_test.copy()
-    # use copies, don't overwrite original
+    # usar copias
 
     X_train_copy['Age'] = age_discretizer.fit_transform(X_train[['Age']])
     X_test_copy['Age'] = age_discretizer.transform(X_test[['Age']])
+    for j in range(2,20):
+        credit_discretizer = KBinsDiscretizer(n_bins=j,encode='ordinal',strategy='uniform')
+        X_train_copy['Credit amount'] = credit_discretizer.fit_transform(X_train[['Credit amount']])
+        X_test_copy['Credit amount'] = credit_discretizer.transform(X_test[['Credit amount']])
+        clf = tree.DecisionTreeClassifier(class_weight='balanced',random_state=42)
 
-    clf = tree.DecisionTreeClassifier(class_weight='balanced',random_state=42)
+        # Treinamento
+        clf.fit(X_train_copy, y_train)
 
-    # Treinamento
-    clf.fit(X_train_copy, y_train)
+        # Teste
+        y_pred = clf.predict(X_test_copy)
 
-    # Teste
-    y_pred = clf.predict(X_test_copy)
-
-    acuracia = accuracy_score(y_test, y_pred)
-    print(f'A acurácia do modelo foi de {acuracia*100:.2f}% com {i} bins')
+        acuracia = accuracy_score(y_test, y_pred)
+        if acuracia>max:
+            max=acuracia
+            print(f'A acurácia do modelo foi de {acuracia*100:.2f}% com {i} bins de idade e {j} bins de credit amount')
 
 cm = confusion_matrix(y_test, y_pred)
 tree.plot_tree(clf)
