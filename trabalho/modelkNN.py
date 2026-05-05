@@ -18,35 +18,6 @@ df['Sex'] = (df['Sex'] == 'male').astype(int) # female -> 0; male -> 1;
 encoder = OrdinalEncoder(categories=[['free', 'rent', 'own']])
 df['Housing'] = encoder.fit_transform(df[['Housing']])
 
-# Saving Accounts
-print(df['Saving accounts'].value_counts())
-
-encoder = OrdinalEncoder(handle_unknown='use_encoded_value',unknown_value= -1,categories=[['little', 'moderate', 'quite rich', 'rich']])
-
-
-imputer = KNNImputer(n_neighbors=5)
-
-df['Saving accounts']=encoder.fit_transform(df[['Saving accounts']]) #converts to numbers
-
-df['Saving accounts'] = df['Saving accounts'].replace(-1, np.nan)
-
-df['Saving accounts']=imputer.fit_transform(df[['Saving accounts']]) #takes care of missing values
-print(df['Saving accounts'].value_counts())
-
-
-# Checking Account--> Removido dessa vez
-print(df['Checking account'].value_counts())
-
-encoder = OrdinalEncoder(handle_unknown='use_encoded_value',unknown_value= -1,categories=[['little', 'moderate', 'rich']])
-imputer = KNNImputer(n_neighbors=5) #inicializando kNN e encoder
-
-df['Checking account'] = encoder.fit_transform(df[['Checking account']]) #converts to numbers
-
-df['Checking account']=df['Checking account'].replace(-1, np.nan) #muda -1 para NaN, para kNN funcionar
-
-df['Checking account'] = imputer.fit_transform(df[['Checking account']]) #takes care of missing values
-
-print(df['Checking account'].value_counts())
 # Purpose
 purpose_encoder = OneHotEncoder(handle_unknown='ignore')
 
@@ -64,6 +35,43 @@ df = pd.concat([df, encoded_df], axis=1)
 
 # Risk
 df['Risk'] = (df['Risk'] == 'good').astype(int) # bad -> 0; good -> 1;
+
+# Saving Accounts
+print(df['Saving accounts'].value_counts())
+
+encoder = OrdinalEncoder(handle_unknown='use_encoded_value',unknown_value= -1,categories=[['little', 'moderate', 'quite rich', 'rich']])
+imputer = KNNImputer(n_neighbors=5)
+
+df['Saving accounts']=encoder.fit_transform(df[['Saving accounts']]) #converts to numbers
+df['Saving accounts'] = df['Saving accounts'].replace(-1, np.nan)
+
+features = df.drop(columns=['Checking account']).columns
+
+imputed = imputer.fit_transform(df.drop(columns=['Checking account'])) #exclui o checking account do calculo do kNN
+imputed_df = pd.DataFrame(imputed, columns=features, index=df.index) #retorna dataframe com Savings preenchidos com kNN
+
+df['Saving accounts'] = imputed_df['Saving accounts']
+
+
+print(df['Saving accounts'].value_counts())
+
+
+# Checking Account--> Removido dessa vez
+print(df['Checking account'].value_counts())
+
+encoder = OrdinalEncoder(handle_unknown='use_encoded_value',unknown_value= -1,categories=[['little', 'moderate', 'rich']])
+imputer = KNNImputer(n_neighbors=5) #inicializando kNN e encoder
+
+df['Checking account'] = encoder.fit_transform(df[['Checking account']]) #converts to numbers
+df['Checking account']=df['Checking account'].replace(-1, np.nan) #muda -1 para NaN, para kNN funcionar
+
+features = df.columns
+imputed = imputer.fit_transform(df) #usa dataframe todo inclusive o savings para preencher com kNN
+imputed_df = pd.DataFrame(imputed, columns=features, index=df.index) #transforma retorno de kNN em dataframe
+df['Checking account'] = imputed_df['Checking account'] #coloca valores la dentro
+
+print(df['Checking account'].value_counts())
+
 
 
 X = df.drop('Risk', axis=1)
