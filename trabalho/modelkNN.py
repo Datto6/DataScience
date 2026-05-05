@@ -11,15 +11,10 @@ from sklearn.impute import KNNImputer
 
 df=pd.read_csv("class_german_credit.csv")
 
-#Credit Amount
-
-scaler=MinMaxScaler(feature_range=(0,5))
-df['Credit amount'] = scaler.fit_transform(df[['Credit amount']]) #normalizes distribution to a range of 0-3
-print(df['Credit amount'].value_counts())
 
 # Sex
 df['Sex'] = (df['Sex'] == 'male').astype(int) # female -> 0; male -> 1;
-
+df=df.drop('Sex', axis=1)
 # Housing
 encoder = OrdinalEncoder(categories=[['free', 'rent', 'own']])
 df['Housing'] = encoder.fit_transform(df[['Housing']])
@@ -80,6 +75,8 @@ df['Checking account']=df['Checking account'].round() #arredonda, porque estamos
 print(df['Checking account'].value_counts())
 
 
+linhas_dup = df.loc[df['Risk'] == 0]
+df = pd.concat([df, linhas_dup], ignore_index=True)
 
 X = df.drop('Risk', axis=1)
 y = df['Risk']
