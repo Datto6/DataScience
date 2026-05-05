@@ -3,13 +3,19 @@ import numpy as np
 
 from sklearn import tree  # Arvore de decisão e plot tree
 from sklearn.metrics import accuracy_score   # Acurácia
-from sklearn.preprocessing import OrdinalEncoder,OneHotEncoder  # Transformar coluna ordinária
+from sklearn.preprocessing import OrdinalEncoder,OneHotEncoder, MinMaxScaler  # Transformar coluna ordinária
 from sklearn.model_selection import train_test_split  # Separar a parte de teste
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay  # Matriz de confusão
 import matplotlib.pyplot as plt  # Plot na tabela
 from sklearn.impute import KNNImputer
 
 df=pd.read_csv("class_german_credit.csv")
+
+#Credit Amount
+
+scaler=MinMaxScaler(feature_range=(0,5))
+df['Credit amount'] = scaler.fit_transform(df[['Credit amount']]) #normalizes distribution to a range of 0-3
+print(df['Credit amount'].value_counts())
 
 # Sex
 df['Sex'] = (df['Sex'] == 'male').astype(int) # female -> 0; male -> 1;
