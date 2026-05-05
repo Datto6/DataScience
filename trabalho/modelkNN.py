@@ -3,7 +3,7 @@ import numpy as np
 
 from sklearn import tree  # Arvore de decisão e plot tree
 from sklearn.metrics import accuracy_score   # Acurácia
-from sklearn.preprocessing import OrdinalEncoder,OneHotEncoder, MinMaxScaler  # Transformar coluna ordinária
+from sklearn.preprocessing import OrdinalEncoder,OneHotEncoder, MinMaxScaler,KBinsDiscretizer  # Transformar coluna ordinária
 from sklearn.model_selection import train_test_split  # Separar a parte de teste
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay  # Matriz de confusão
 import matplotlib.pyplot as plt  # Plot na tabela
@@ -14,7 +14,8 @@ df=pd.read_csv("class_german_credit.csv")
 
 # Sex
 df['Sex'] = (df['Sex'] == 'male').astype(int) # female -> 0; male -> 1;
-df=df.drop('Sex', axis=1)
+# df=df.drop('Sex', axis=1)
+
 # Housing
 encoder = OrdinalEncoder(categories=[['free', 'rent', 'own']])
 df['Housing'] = encoder.fit_transform(df[['Housing']])
@@ -75,24 +76,35 @@ df['Checking account']=df['Checking account'].round() #arredonda, porque estamos
 print(df['Checking account'].value_counts())
 
 
-linhas_dup = df.loc[df['Risk'] == 0]
-df = pd.concat([df, linhas_dup], ignore_index=True)
 
 X = df.drop('Risk', axis=1)
 y = df['Risk']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=42, stratify = y)
 
-clf = tree.DecisionTreeClassifier(random_state=42)
+for i in range(2,20):
+    age_discretizer = KBinsDiscretizer(
+        n_bins=i,
+        encode='ordinal',
+        strategy='uniform'
+    )
+    X_train_copy = X_train.copy()
+    X_test_copy = X_test.copy()
+    # use copies, don't overwrite original
 
-# Treinamento
-clf.fit(X_train, y_train)
+    X_train_copy['Age'] = age_discretizer.fit_transform(X_train[['Age']])
+    X_test_copy['Age'] = age_discretizer.transform(X_test[['Age']])
 
-# Teste
-y_pred = clf.predict(X_test)
+    clf = tree.DecisionTreeClassifier(class_weight='balanced',random_state=42)
 
-acuracia = accuracy_score(y_test, y_pred)
-print(f'A acurácia do modelo foi de {acuracia*100:.2f}%')
+    # Treinamento
+    clf.fit(X_train_copy, y_train)
+
+    # Teste
+    y_pred = clf.predict(X_test_copy)
+
+    acuracia = accuracy_score(y_test, y_pred)
+    print(f'A acurácia do modelo foi de {acuracia*100:.2f}% com {i} bins')
 
 cm = confusion_matrix(y_test, y_pred)
 tree.plot_tree(clf)
