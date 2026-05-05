@@ -82,7 +82,10 @@ y = df['Risk']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=42, stratify = y)
 max=-1
-for i in range(2,20):
+best_cm = None
+best_params = None
+best_model = None
+for i in range(2,40):
     age_discretizer = KBinsDiscretizer(
         n_bins=i,
         encode='ordinal',
@@ -94,7 +97,7 @@ for i in range(2,20):
 
     X_train_copy['Age'] = age_discretizer.fit_transform(X_train[['Age']])
     X_test_copy['Age'] = age_discretizer.transform(X_test[['Age']])
-    for j in range(2,20):
+    for j in range(2,40):
         credit_discretizer = KBinsDiscretizer(n_bins=j,encode='ordinal',strategy='uniform')
         X_train_copy['Credit amount'] = credit_discretizer.fit_transform(X_train[['Credit amount']])
         X_test_copy['Credit amount'] = credit_discretizer.transform(X_test[['Credit amount']])
@@ -110,15 +113,19 @@ for i in range(2,20):
         if acuracia>max:
             max=acuracia
             print(f'A acurácia do modelo foi de {acuracia*100:.2f}% com {i} bins de idade e {j} bins de credit amount')
+            max = acuracia
+            best_cm = confusion_matrix(y_test, y_pred)
+            best_params = (i, j)
+            best_model = clf
 
-cm = confusion_matrix(y_test, y_pred)
-tree.plot_tree(clf)
-disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+print(f"Best accuracy: {max*100:.2f}% with Age={best_params[0]} and Credit={best_params[1]}")
+plt.figure(figsize=(4,4))
+disp = ConfusionMatrixDisplay(confusion_matrix=best_cm)
 disp.plot(cmap='Blues')
-plt.title('Matriz de Confusão')
+plt.title('Best Confusion Matrix')
 
 
-importancia = pd.Series(clf.feature_importances_, index=X.columns).sort_values(ascending=False)
+importancia = pd.Series(best_model.feature_importances_, index=X.columns).sort_values(ascending=False)
 print("Importância das colunas:\n", importancia)
 
 plt.show()
