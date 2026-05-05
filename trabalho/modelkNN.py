@@ -52,6 +52,7 @@ imputed_df = pd.DataFrame(imputed, columns=features, index=df.index) #retorna da
 
 df['Saving accounts'] = imputed_df['Saving accounts']
 
+df['Saving accounts']=df['Saving accounts'].round() #arredonda, porque estamos falando de valores discretos, nao existe decimal
 
 print(df['Saving accounts'].value_counts())
 
@@ -69,7 +70,7 @@ features = df.columns
 imputed = imputer.fit_transform(df) #usa dataframe todo inclusive o savings para preencher com kNN
 imputed_df = pd.DataFrame(imputed, columns=features, index=df.index) #transforma retorno de kNN em dataframe
 df['Checking account'] = imputed_df['Checking account'] #coloca valores la dentro
-
+df['Checking account']=df['Checking account'].round() #arredonda, porque estamos falando de valores discretos, nao existe decimal
 print(df['Checking account'].value_counts())
 
 
@@ -89,3 +90,15 @@ y_pred = clf.predict(X_test)
 
 acuracia = accuracy_score(y_test, y_pred)
 print(f'A acurácia do modelo foi de {acuracia*100:.2f}%')
+
+cm = confusion_matrix(y_test, y_pred)
+tree.plot_tree(clf)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+disp.plot(cmap='Blues')
+plt.title('Matriz de Confusão')
+
+
+importancia = pd.Series(clf.feature_importances_, index=X.columns).sort_values(ascending=False)
+print("Importância das colunas:\n", importancia)
+
+plt.show()
