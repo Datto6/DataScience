@@ -11,12 +11,13 @@ from sklearn.impute import KNNImputer
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.naive_bayes import ComplementNB, GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
 # =========================
 # LOAD DATA
 # =========================
 
 df = pd.read_csv("class_german_credit.csv")
-
+df=df.dropna().reset_index(drop=True)
 # =========================
 # COLUMN GROUPS
 # =========================
@@ -51,7 +52,7 @@ def purposeEncoder(df):
 
     return df
 
-df=purposeEncoder(df)
+# df=purposeEncoder(df)
 
 # target
 y = (df['Risk'] == 'good').astype(int)
@@ -76,6 +77,8 @@ preprocessor = ColumnTransformer([
     # ('duration_bins',KBinsDiscretizer(encode='ordinal',quantile_method='linear'),['Duration']),
 
     # ('credit_bins',KBinsDiscretizer(encode='ordinal',quantile_method='linear'),['Credit amount'])
+    #Purpose-> one-hot
+    ('purpose',OneHotEncoder(handle_unknown='ignore'),['Purpose']),
 ], remainder='passthrough')
 
 # =========================
@@ -83,10 +86,10 @@ preprocessor = ColumnTransformer([
 # =========================
 
 pipe = Pipeline([
-    ('preprocessing', preprocessor), #transforma em numericos
-    ('imputer', KNNImputer(n_neighbors=5)), #imputa missing de saving e checking
-    ('rounder',FunctionTransformer(np.round)), #agora arredonda
-    ('model', GaussianNB())
+    ('preprocessing', preprocessor), #transforma em numericos 
+    ('imputer', KNNImputer(n_neighbors=5)),
+    ('normalizer',MinMaxScaler()), #normaliza
+    ('model', KNeighborsClassifier())
 ])
 
 # =========================
@@ -100,24 +103,9 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42,
     stratify=y
 )
-X_train_processed = pipe[:-1].fit_transform(X_train, y_train)
-X_test_processed = pipe[:-1].transform(X_test)
-
-feature_names = pipe.named_steps['preprocessing'].get_feature_names_out()
-
-X_train_processed = pd.DataFrame(X_train_processed,columns=feature_names,index=X_train.index)
-
-X_test_processed = pd.DataFrame(X_test_processed,columns=feature_names,index=X_test.index)
-
-print(X_train_processed.head())
-print(X_train_processed['saving__Saving accounts'].value_counts())
-print(X_train_processed['checking__Checking account'].value_counts()) #isso eh apenas para visualizar o que o kNN fez
-print(X_train_processed.info())
-
+#Apenas fazendo 80% treino e 20% teste
 pipe.fit(X_train,y_train)
-
 y_pred = pipe.predict(X_test)
-
 acuracia = accuracy_score(y_test, y_pred)
 print(f"{acuracia*100:.2f}% accuracy")
 
@@ -126,3 +114,39 @@ disp = ConfusionMatrixDisplay(confusion_matrix=cm)
 disp.plot(cmap='Blues')
 plt.title('Confusion Matrix')
 plt.show()
+#Fazendo cross validation  para achar melhores hiperparametros
+
+param_grid = {
+    'model__n_neighbors': [3, 5, 7, 9, 11],
+    'model__weights': ['uniform', 'distance']
+}
+ 
+grid = GridSearchCV(
+    pipe,
+    param_grid,
+    cv=5,
+    scoring='accuracy'
+)
+#Treina no espaço de treinamento
+grid.fit(X_train, y_train)
+#Apresentar resultados
+best_model = grid.best_estimator_
+print(f"Best CV accuracy: {grid.best_score_ * 100:.2f}%")
+print(f"Best parameters: {grid.best_params_}")
+
+y_pred = best_model.predict(X_test)
+
+test_accuracy = accuracy_score(y_test, y_pred)
+print(f"Final test accuracy: {test_accuracy * 100:.2f}%")
+
+
+
+y_pred = best_model.predict(X_test)
+
+acuracia = accuracy_score(y_test, y_pred)
+print(f"{acuracia*100:.2f}% best model accuracy")
+
+best_cm = confusion_matrix(y_test, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=best_cm)
+disp.plot(cmap='Blues')
+plt.title('Best Confusion Matrix')
