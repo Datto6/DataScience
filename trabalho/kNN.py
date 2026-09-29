@@ -17,7 +17,7 @@ from sklearn.neighbors import KNeighborsClassifier
 # =========================
 
 df = pd.read_csv("class_german_credit.csv")
-df=df.dropna().reset_index(drop=True)
+# df=df.dropna().reset_index(drop=True)
 # =========================
 # COLUMN GROUPS
 # =========================
@@ -87,8 +87,8 @@ preprocessor = ColumnTransformer([
 
 pipe = Pipeline([
     ('preprocessing', preprocessor), #transforma em numericos 
-    ('imputer', KNNImputer(n_neighbors=5)),
     ('normalizer',MinMaxScaler()), #normaliza
+    ('imputer', KNNImputer(n_neighbors=5)),
     ('model', KNeighborsClassifier())
 ])
 
@@ -113,7 +113,7 @@ cm = confusion_matrix(y_test, y_pred)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm)
 disp.plot(cmap='Blues')
 plt.title('Confusion Matrix')
-plt.show()
+
 #Fazendo cross validation  para achar melhores hiperparametros
 
 param_grid = {
@@ -150,3 +150,4 @@ best_cm = confusion_matrix(y_test, y_pred)
 disp = ConfusionMatrixDisplay(confusion_matrix=best_cm)
 disp.plot(cmap='Blues')
 plt.title('Best Confusion Matrix')
+plt.show()
