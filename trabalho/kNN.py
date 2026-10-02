@@ -52,7 +52,7 @@ def purposeEncoder(df):
 
     return df
 
-# df=purposeEncoder(df)
+df=purposeEncoder(df)
 
 # target
 y = (df['Risk'] == 'good').astype(int)
@@ -78,7 +78,7 @@ preprocessor = ColumnTransformer([
 
     # ('credit_bins',KBinsDiscretizer(encode='ordinal',quantile_method='linear'),['Credit amount'])
     #Purpose-> one-hot
-    ('purpose',OneHotEncoder(handle_unknown='ignore'),['Purpose']),
+    # ('purpose',OneHotEncoder(handle_unknown='ignore'),['Purpose']),
 ], remainder='passthrough')
 
 # =========================
@@ -87,9 +87,9 @@ preprocessor = ColumnTransformer([
 
 pipe = Pipeline([
     ('preprocessing', preprocessor), #transforma em numericos 
-    ('normalizer',MinMaxScaler()), #normaliza
     ('imputer', KNNImputer(n_neighbors=5)),
-    ('model', KNeighborsClassifier())
+    ('normalizer',MinMaxScaler()), #normaliza
+    ('model', KNeighborsClassifier()),
 ])
 
 # =========================
