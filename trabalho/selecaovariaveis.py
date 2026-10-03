@@ -52,7 +52,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import OrdinalEncoder,OneHotEncoder
 from sklearn.compose import ColumnTransformer
-from scipy import stats
+from scipy.stats import chi2_contingency,chi2
 import seaborn as sns
 preprocessor = ColumnTransformer([
     # Sex -> binary
@@ -92,49 +92,80 @@ X_processed = pd.DataFrame(
     columns=feature_names,
     index=X.index
 )
+numeric_features = [
+    'remainder__Credit amount',
+    'remainder__Duration',
+    "remainder__Job",
+    "remainder__Age",
+]
 
+categorical_features = [
+    "purpose__Purpose_business",
+    "purpose__Purpose_vacation/others",
+    "purpose__Purpose_car",
+    "purpose__Purpose_furniture/equipment",
+    "purpose__Purpose_repairs",
+    "purpose__Purpose_domestic appliances",
+    "purpose__Purpose_education",
+    "sex__Sex",
+    "purpose__Purpose_radio/TV",
+    "housing__Housing",
+    "saving__Saving accounts",
+    "checking__Checking account",
+    "remainder__Job"
+]
 # Add Risk back to the processed dataframe
 X_processed['Risk'] = y
 
 # =========================
-# PEARSON
-# =========================
-
-resultado_pearson = X_processed.corr(method='pearson')['Risk'].drop('Risk').sort_values()
-
-print('Resultado Pearson =')
-print(resultado_pearson)
-
-# Full Pearson matrix
-plt.figure(figsize=(16, 13))
-
-sns.heatmap(resultado_pearson,annot=True,fmt=".2f",cmap="coolwarm",center=0,vmin=-1,vmax=1,square=True,linewidths=0.5,cbar_kws={"shrink": 0.8})
-
-plt.title("Matriz de Correlação de Pearson", fontsize=18, pad=20)
-
-plt.xticks(rotation=45, ha="right", fontsize=9)
-plt.yticks(rotation=0, fontsize=9)
-
-plt.tight_layout()
-plt.savefig("correlation_matrix_pearson.png",dpi=400,bbox_inches="tight")
-plt.close()
-# =========================
 # SPEARMAN
 # =========================
-resultado_spearman = X_processed.corr(method='spearman')['Risk'].drop('Risk').sort_values()
-
-print('Resultado Spearman =')
+resultado_spearman = (X_processed.corr(method='spearman')['Risk'].drop('Risk').sort_values(key=abs,ascending=False).to_frame(name='Risk'))
 print(resultado_spearman)
-# Full Spearman matrix
-plt.figure(figsize=(16, 13))
+plt.figure(figsize=(8, 12))
 
-sns.heatmap(resultado_spearman,annot=True,fmt=".2f",cmap="coolwarm",center=0,vmin=-1,vmax=1,square=True,linewidths=0.5,cbar_kws={"shrink": 0.8})
+sns.heatmap(resultado_spearman,annot=True,fmt=".2f",cmap="coolwarm",center=0,vmin=-1,vmax=1,linewidths=0.5,cbar_kws={"label": "Correlação"})
 
-plt.title("Matriz de Correlação de Spearman", fontsize=18, pad=20)
-
-plt.xticks(rotation=45, ha="right", fontsize=9)
-plt.yticks(rotation=0, fontsize=9)
+plt.title("Correlação de Spearman com Risk", fontsize=18, pad=20)
+plt.xticks(rotation=0)
+plt.yticks(rotation=0)
 
 plt.tight_layout()
 plt.savefig("correlation_matrix_spearman.png",dpi=400,bbox_inches="tight")
 plt.close()
+
+#QUI Quadrado -----------------------
+alpha = 0.05
+nomes=[]
+for feature in categorical_features:
+
+    tabela = pd.crosstab(
+        X_processed[feature],
+        X_processed['Risk']
+    )
+
+    stat, p, dof, expected = chi2_contingency(tabela)
+
+    # Critical value
+    critical = chi2.ppf(1 - alpha, dof)
+
+    if stat >= critical:
+        nome=(p,f"""
+{feature}
+Chi-square = {stat:.4f}
+Critical value = {critical:.4f}
+p-value = {p:.6f}
+Dependent (reject H0)""")
+    else:
+        print()
+        nome=(p,
+f"""
+{feature}
+Chi-square = {stat:.4f}
+Critical value = {critical:.4f}
+p-value = {p:.6f}
+Independent (fail to reject H0)""")
+    nomes.append(nome)
+nomes.sort()
+for i in nomes:
+    print(i[1])
