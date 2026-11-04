@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn import tree  # Arvore de decisão e plot tree
-from sklearn.metrics import accuracy_score   # Acurácia
+from sklearn.metrics import accuracy_score,f1_score   # Acurácia
 from sklearn.preprocessing import OrdinalEncoder,OneHotEncoder, MinMaxScaler,KBinsDiscretizer,FunctionTransformer  # Transformar coluna ordinária
 from sklearn.model_selection import train_test_split,GridSearchCV,StratifiedKFold  # Separar a parte de teste
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay  # Matriz de confusão
@@ -29,33 +29,9 @@ checking_col = ['Checking account']
 # =========================
 # PREPROCESSING PIPELINE
 # =========================
-def purposeEncoder(df):
-    purpose_encoder = OneHotEncoder(handle_unknown='ignore')
-
-    purpose_encoder.fit(df[['Purpose']]) #fit
-
-    encoded = purpose_encoder.transform(df[['Purpose']]).toarray() # transform
-
-    # turn into DataFrame with proper column names
-    encoded_df = pd.DataFrame(encoded, columns=purpose_encoder.get_feature_names_out(['Purpose']))
-
-    df = df.drop(columns=['Purpose']) # drop original column
-    df = pd.concat([df, encoded_df], axis=1)
-    # Merge the three columns into one
-    cols_to_merge = ['Purpose_repairs', 'Purpose_vacation/others', 'Purpose_domestic appliances', 'Purpose_education']
-    existing_cols = [c for c in cols_to_merge if c in df.columns] #protects against keyerror, checks if columns exist in df
-
-    if existing_cols:
-        df['Purpose_agreggate_others'] = df[existing_cols].max(axis=1) #takes max of row in each existing_col 
-        df = df.drop(columns=existing_cols)
-
-    return df
-
-df=purposeEncoder(df)
 
 # target
 y = (df['Risk'] == 'good').astype(int)
-# print(df.head()) so para olhar valores
 # features
 X = df.drop(columns='Risk')
 
@@ -78,6 +54,21 @@ preprocessor = ColumnTransformer([
     # ('credit_bins',KBinsDiscretizer(encode='ordinal',quantile_method='linear'),['Credit amount'])
 ], remainder='passthrough')
 
+# ============================================================
+# ENCODE PURPOSE ONLY
+# ============================================================
+
+purpose_encoder = OneHotEncoder(handle_unknown='ignore',sparse_output=False)
+purpose_encoded = purpose_encoder.fit_transform(X[['Purpose']])
+purpose_columns = purpose_encoder.get_feature_names_out(['Purpose'])
+purpose_df = pd.DataFrame(purpose_encoded,columns=purpose_columns,index=X.index)
+
+# Remove original Purpose
+X = X.drop(columns=['Purpose'])
+
+# Add one-hot Purpose columns
+X = pd.concat([X, purpose_df],axis=1)
+
 # =========================
 # COMPLETE PIPELINE
 # =========================
@@ -86,12 +77,26 @@ pipe = Pipeline([
     ('preprocessing', preprocessor), #transforma em numericos p arvore
     ('imputer', KNNImputer(n_neighbors=5)), #imputa missing de saving e checking
     # ('rounder',FunctionTransformer(np.round)), #agora arredonda
-    ('model', GradientBoostingClassifier(random_state=42))
+    ('model', GradientBoostingClassifier(random_state=42,max_depth=2,n_estimators=100))
 ])
 
 # =========================
 # TRAIN TEST SPLIT
 # =========================
+
+worst_attributes = [
+    'Job',
+    'Purpose_business',
+    'Purpose_car',
+    'Purpose_furniture/equipment',
+    'Purpose_vacation/others',
+    'Purpose_repairs',
+    'Purpose_domestic appliances',
+    'Purpose_education'
+]
+
+# Remove only columns that exist
+X = X.drop(columns=worst_attributes)
 
 X_train, X_test, y_train, y_test = train_test_split(
     X,
@@ -100,47 +105,36 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42,
     stratify=y
 )
-X_train_processed = pipe[:-1].fit_transform(X_train, y_train)
-X_test_processed = pipe[:-1].transform(X_test)
+# =========================
+# MANUAL MODEL PARAMETERS
+# =========================
 
-feature_names = pipe.named_steps['preprocessing'].get_feature_names_out()
-
-X_train_processed = pd.DataFrame(X_train_processed,columns=feature_names,index=X_train.index)
-
-X_test_processed = pd.DataFrame(X_test_processed,columns=feature_names,index=X_test.index)
-
-# print(X_train_processed.head())
-# print(X_train_processed['saving__Saving accounts'].value_counts())
-# print(X_train_processed['checking__Checking account'].value_counts()) #isso eh apenas para visualizar o que o kNN fez
-# print(X_train_processed.info())
-
-param_grid = {
-    'model__max_depth': [None, 2, 5, 10],
-    'model__min_samples_split': [2, 5, 10],
-    'model__min_samples_leaf': [1, 2, 6],
-    'model__n_estimators': [50, 100, 200]
-}
-cv_strategy = StratifiedKFold(n_splits=5) #classes desbalanceadas tem que manter stratified
-grid = GridSearchCV(
-    pipe,
-    param_grid,
-    scoring='accuracy',
-    cv=cv_strategy,
-    verbose=1
+pipe.set_params(
+    model__max_depth=2,
+    model__n_estimators=100
 )
 
-grid.fit(X_train, y_train)
-
-print(grid.best_params_)
-print(grid.best_score_)
-best_model = grid.best_estimator_
-
-y_pred = best_model.predict(X_test)
+pipe.fit(X_train, y_train)
+y_pred = pipe.predict(X_test)
 
 acuracia = accuracy_score(y_test, y_pred)
-print(f"{acuracia*100:.2f}% best model accuracy")
 
-best_cm = confusion_matrix(y_test, y_pred)
-disp = ConfusionMatrixDisplay(confusion_matrix=best_cm)
+f1_good = f1_score(y_test, y_pred, pos_label=1)
+f1_bad = f1_score(y_test, y_pred, pos_label=0)
+f1_macro = f1_score(y_test, y_pred, average='macro')
+
+print(f"Accuracy:       {acuracia*100:.2f}%")
+print(f"Good credit F1: {f1_good*100:.2f}%")
+print(f"Bad credit F1:  {f1_bad*100:.2f}%")
+print(f"Macro F1:       {f1_macro*100:.2f}%")
+
+# =========================
+# CONFUSION MATRIX
+# =========================
+
+best_cm = confusion_matrix(y_test,y_pred,labels=[0, 1])
+
+disp = ConfusionMatrixDisplay(confusion_matrix=best_cm,display_labels=['Bad credit', 'Good credit'])
 disp.plot(cmap='Blues')
-plt.title('Best Confusion Matrix')
+plt.title('Gradient Boosting Confusion Matrix')
+plt.show()

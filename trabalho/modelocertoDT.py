@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn import tree  # Arvore de decisão e plot tree
-from sklearn.metrics import accuracy_score   # Acurácia
+from sklearn.metrics import accuracy_score,f1_score   # Acurácia
 from sklearn.preprocessing import OrdinalEncoder,OneHotEncoder, MinMaxScaler,KBinsDiscretizer,FunctionTransformer  # Transformar coluna ordinária
 from sklearn.model_selection import train_test_split,GridSearchCV,StratifiedKFold  # Separar a parte de teste
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay  # Matriz de confusão
@@ -138,6 +138,14 @@ y_pred = best_model.predict(X_test)
 
 acuracia = accuracy_score(y_test, y_pred)
 print(f"{acuracia*100:.2f}% best model accuracy")
+
+f1_good = f1_score(y_test, y_pred, pos_label=1)
+f1_bad = f1_score(y_test, y_pred, pos_label=0)
+f1_macro = f1_score(y_test, y_pred, average='macro')
+
+print(f"Good credit F1: {f1_good*100:.2f}%")
+print(f"Bad credit F1:  {f1_bad*100:.2f}%")
+print(f"Macro F1:       {f1_macro*100:.2f}%")
 
 best_cm = confusion_matrix(y_test, y_pred)
 disp = ConfusionMatrixDisplay(confusion_matrix=best_cm)

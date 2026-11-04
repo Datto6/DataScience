@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn import tree  # Arvore de decisão e plot tree
-from sklearn.metrics import accuracy_score   # Acurácia
+from sklearn.metrics import accuracy_score, f1_score  # Acurácia
 from sklearn.preprocessing import OrdinalEncoder,OneHotEncoder, MinMaxScaler,KBinsDiscretizer,FunctionTransformer  # Transformar coluna ordinária
 from sklearn.model_selection import train_test_split,GridSearchCV,StratifiedKFold  # Separar a parte de teste
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay  # Matriz de confusão
@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt  # Plot na tabela
 from sklearn.impute import KNNImputer
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
-from sklearn.naive_bayes import ComplementNB, GaussianNB
+from sklearn.naive_bayes import ComplementNB, GaussianNB, CategoricalNB
 # =========================
 # LOAD DATA
 # =========================
@@ -58,6 +58,12 @@ y = (df['Risk'] == 'good').astype(int)
 # print(df.head()) so para olhar valores
 # features
 X = df.drop(columns='Risk')
+categorical_cols = [
+    'Sex',
+    'Housing',
+    'Saving accounts',
+    'Checking account'
+]
 
 preprocessor = ColumnTransformer([
     # Sex -> binary
@@ -83,10 +89,9 @@ preprocessor = ColumnTransformer([
 # =========================
 
 pipe = Pipeline([
-    ('preprocessing', preprocessor), #transforma em numericos
+    ('preprocessing', preprocessor), #transforma em numericos p arvore
     ('imputer', KNNImputer(n_neighbors=5)), #imputa missing de saving e checking
-    ('rounder',FunctionTransformer(np.round)), #agora arredonda
-    ('model', GaussianNB())
+    ('model', CategoricalNB())
 ])
 
 # =========================
@@ -100,19 +105,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42,
     stratify=y
 )
-X_train_processed = pipe[:-1].fit_transform(X_train, y_train)
-X_test_processed = pipe[:-1].transform(X_test)
-
-feature_names = pipe.named_steps['preprocessing'].get_feature_names_out()
-
-X_train_processed = pd.DataFrame(X_train_processed,columns=feature_names,index=X_train.index)
-
-X_test_processed = pd.DataFrame(X_test_processed,columns=feature_names,index=X_test.index)
-
-print(X_train_processed.head())
-print(X_train_processed['saving__Saving accounts'].value_counts())
-print(X_train_processed['checking__Checking account'].value_counts()) #isso eh apenas para visualizar o que o kNN fez
-print(X_train_processed.info())
 
 pipe.fit(X_train,y_train)
 
@@ -120,6 +112,14 @@ y_pred = pipe.predict(X_test)
 
 acuracia = accuracy_score(y_test, y_pred)
 print(f"{acuracia*100:.2f}% accuracy")
+
+f1_good = f1_score(y_test, y_pred, pos_label=1)
+f1_bad = f1_score(y_test, y_pred, pos_label=0)
+f1_macro = f1_score(y_test, y_pred, average='macro')
+
+print(f"Good credit F1: {f1_good*100:.2f}%")
+print(f"Bad credit F1:  {f1_bad*100:.2f}%")
+print(f"Macro F1:       {f1_macro*100:.2f}%")
 
 cm = confusion_matrix(y_test, y_pred)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm)

@@ -166,13 +166,8 @@ for mask in range(total_combinations):
 
     param_grid = {
         'model__n_neighbors': [3, 5, 7, 9, 11],
-
-        'model__weights': [
-            'uniform',
-            'distance'
-        ]
+        'model__weights': ['uniform','distance']
     }
-
 
     grid = GridSearchCV(
         pipe,
@@ -214,13 +209,10 @@ for mask in range(total_combinations):
         f"Test: {test_accuracy * 100:.2f}%"
     )
 
-
 # ============================================================
 # RESULTS DATAFRAME
 # ============================================================
-
 results_df = pd.DataFrame(results)
-
 # ============================================================
 # SORT BY TEST ACCURACY
 # ============================================================
@@ -229,7 +221,6 @@ results_df = results_df.sort_values(by='test_accuracy',ascending=False)
 # ============================================================
 # PRINT TOP 20
 # ============================================================
-
 print("\n")
 print("=" * 70)
 print("TOP 20 COMBINATIONS")
