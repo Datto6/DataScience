@@ -5,7 +5,7 @@ from sklearn import tree  # Arvore de decisão e plot tree
 from sklearn.metrics import accuracy_score   # Acurácia
 from sklearn.preprocessing import OrdinalEncoder,OneHotEncoder, MinMaxScaler,KBinsDiscretizer,FunctionTransformer  # Transformar coluna ordinária
 from sklearn.model_selection import train_test_split,GridSearchCV,StratifiedKFold  # Separar a parte de teste
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay  # Matriz de confusão
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay,f1_score  # Matriz de confusão
 import matplotlib.pyplot as plt  # Plot na tabela
 from sklearn.impute import KNNImputer
 from sklearn.pipeline import Pipeline
@@ -30,29 +30,6 @@ checking_col = ['Checking account']
 # =========================
 # PREPROCESSING PIPELINE
 # =========================
-def purposeEncoder(df):
-    purpose_encoder = OneHotEncoder(handle_unknown='ignore')
-
-    purpose_encoder.fit(df[['Purpose']]) #fit
-
-    encoded = purpose_encoder.transform(df[['Purpose']]).toarray() # transform
-
-    # turn into DataFrame with proper column names
-    encoded_df = pd.DataFrame(encoded, columns=purpose_encoder.get_feature_names_out(['Purpose']))
-
-    df = df.drop(columns=['Purpose']) # drop original column
-    df = pd.concat([df, encoded_df], axis=1)
-    # Merge the three columns into one
-    cols_to_merge = ['Purpose_repairs', 'Purpose_vacation/others', 'Purpose_domestic appliances', 'Purpose_education']
-    existing_cols = [c for c in cols_to_merge if c in df.columns] #protects against keyerror, checks if columns exist in df
-
-    if existing_cols:
-        df['Purpose_agreggate_others'] = df[existing_cols].max(axis=1) #takes max of row in each existing_col 
-        df = df.drop(columns=existing_cols)
-
-    return df
-
-# df=purposeEncoder(df)
 
 # target
 y = (df['Risk'] == 'good').astype(int)
@@ -78,8 +55,22 @@ preprocessor = ColumnTransformer([
 
     # ('credit_bins',KBinsDiscretizer(encode='ordinal',quantile_method='linear'),['Credit amount'])
     #Purpose-> one-hot
-    ('purpose',OneHotEncoder(handle_unknown='ignore'),['Purpose']),
 ], remainder='passthrough')
+
+# ============================================================
+# ENCODE PURPOSE ONLY
+# ============================================================
+
+purpose_encoder = OneHotEncoder(handle_unknown='ignore',sparse_output=False)
+purpose_encoded = purpose_encoder.fit_transform(X[['Purpose']])
+purpose_columns = purpose_encoder.get_feature_names_out(['Purpose'])
+purpose_df = pd.DataFrame(purpose_encoded,columns=purpose_columns,index=X.index)
+
+# Remove original Purpose
+X = X.drop(columns=['Purpose'])
+
+# Add one-hot Purpose columns
+X = pd.concat([X, purpose_df],axis=1)
 
 # =========================
 # COMPLETE PIPELINE
@@ -95,6 +86,16 @@ pipe = Pipeline([
 # =========================
 # TRAIN TEST SPLIT
 # =========================
+worst_attributes = [
+    'Purpose_business',
+    'Purpose_car',
+    'Purpose_furniture/equipment',
+    'Purpose_repairs',
+    'Purpose_domestic appliances',
+    'Purpose_education'
+]
+
+X = X.drop(columns=worst_attributes)
 
 X_train, X_test, y_train, y_test = train_test_split(
     X,
@@ -103,16 +104,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42,
     stratify=y
 )
-#Apenas fazendo 80% treino e 20% teste
-pipe.fit(X_train,y_train)
-y_pred = pipe.predict(X_test)
-acuracia = accuracy_score(y_test, y_pred)
-print(f"{acuracia*100:.2f}% accuracy")
-
-cm = confusion_matrix(y_test, y_pred)
-disp = ConfusionMatrixDisplay(confusion_matrix=cm)
-disp.plot(cmap='Blues')
-plt.title('Confusion Matrix')
 
 #Fazendo cross validation  para achar melhores hiperparametros
 
@@ -131,14 +122,19 @@ grid = GridSearchCV(
 grid.fit(X_train, y_train)
 #Apresentar resultados
 best_model = grid.best_estimator_
-print(f"Best CV accuracy: {grid.best_score_ * 100:.2f}%")
 print(f"Best parameters: {grid.best_params_}")
 
 y_pred = best_model.predict(X_test)
 
 test_accuracy = accuracy_score(y_test, y_pred)
-print(f"Final test accuracy: {test_accuracy * 100:.2f}%")
+f1_good = f1_score(y_test, y_pred, pos_label=1)
+f1_bad = f1_score(y_test, y_pred, pos_label=0)
+f1_macro = f1_score(y_test, y_pred, average='macro')
 
+print(f"Accuracy:       {test_accuracy*100:.2f}%")
+print(f"Good credit F1: {f1_good*100:.2f}%")
+print(f"Bad credit F1:  {f1_bad*100:.2f}%")
+print(f"Macro F1:       {f1_macro*100:.2f}%")
 
 
 y_pred = best_model.predict(X_test)

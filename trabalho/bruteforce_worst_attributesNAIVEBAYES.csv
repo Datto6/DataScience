@@ -1,0 +1,257 @@
+removed,num_removed,test_accuracy,f1_score
+None,0,0.625,0.5807127882599581
+Purpose_business,1,0.625,0.5807127882599581
+"Job, Purpose_car",2,0.625,0.5807127882599581
+Purpose_car,1,0.625,0.5807127882599581
+"Purpose_business, Purpose_car",2,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment",2,0.625,0.5807127882599581
+Purpose_furniture/equipment,1,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment",3,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment",3,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment",2,0.625,0.5807127882599581
+"Purpose_car, Purpose_vacation/others",2,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_vacation/others",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_vacation/others",2,0.625,0.5807127882599581
+Purpose_vacation/others,1,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others",3,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others",4,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_vacation/others",3,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_vacation/others",3,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_vacation/others",4,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_vacation/others",2,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_repairs",3,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_repairs",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_repairs",3,0.625,0.5807127882599581
+"Purpose_car, Purpose_repairs",2,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_repairs",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_repairs",2,0.625,0.5807127882599581
+Purpose_repairs,1,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs",4,0.625,0.5807127882599581
+"Purpose_car, Purpose_vacation/others, Purpose_repairs",3,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_vacation/others, Purpose_repairs",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_repairs",4,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_repairs",2,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_repairs",4,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_repairs",5,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_repairs",4,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_repairs",3,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_vacation/others, Purpose_repairs",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_vacation/others, Purpose_repairs",3,0.625,0.5807127882599581
+"Job, Purpose_vacation/others, Purpose_repairs",3,0.625,0.5807127882599581
+"Purpose_vacation/others, Purpose_repairs",2,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs",5,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_repairs",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_vacation/others, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_domestic appliances",2,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Purpose_car, Purpose_domestic appliances",2,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_domestic appliances",2,0.625,0.5807127882599581
+Purpose_domestic appliances,1,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_vacation/others, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_vacation/others, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Purpose_vacation/others, Purpose_domestic appliances",2,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_vacation/others, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_repairs, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_repairs, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_repairs, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Purpose_car, Purpose_repairs, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_repairs, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_repairs, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Purpose_repairs, Purpose_domestic appliances",2,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",7,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",5,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",6,0.625,0.5807127882599581
+"Job, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",4,0.625,0.5807127882599581
+"Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_vacation/others, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_car, Purpose_vacation/others, Purpose_education",3,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_vacation/others, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_vacation/others, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_vacation/others, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_vacation/others, Purpose_education",2,0.625,0.5807127882599581
+"Job, Purpose_vacation/others, Purpose_education",3,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_education",3,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_education",2,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_education",3,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_car, Purpose_education",2,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_education",2,0.625,0.5807127882599581
+"Job, Purpose_education",2,0.625,0.5807127882599581
+Purpose_education,1,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Purpose_business, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Purpose_car, Purpose_repairs, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_repairs, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_repairs, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_domestic appliances, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_repairs, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_repairs, Purpose_education",3,0.625,0.5807127882599581
+"Job, Purpose_repairs, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_repairs, Purpose_education",2,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_vacation/others, Purpose_repairs, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_vacation/others, Purpose_repairs, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_repairs, Purpose_education",3,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_repairs, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_repairs, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_repairs, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_repairs, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_repairs, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_vacation/others, Purpose_repairs, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_vacation/others, Purpose_repairs, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_education",6,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_education",7,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_car, Purpose_domestic appliances, Purpose_education",3,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_domestic appliances, Purpose_education",3,0.625,0.5807127882599581
+"Job, Purpose_domestic appliances, Purpose_education",3,0.625,0.5807127882599581
+"Purpose_domestic appliances, Purpose_education",2,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",7,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",7,0.625,0.5807127882599581
+"Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_repairs, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances, Purpose_education",7,0.625,0.5807127882599581
+"Job, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",7,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",8,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances, Purpose_education",7,0.625,0.5807127882599581
+"Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_repairs, Purpose_domestic appliances, Purpose_education",5,0.625,0.5807127882599581
+"Purpose_business, Purpose_repairs, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Job, Purpose_repairs, Purpose_domestic appliances, Purpose_education",4,0.625,0.5807127882599581
+"Purpose_repairs, Purpose_domestic appliances, Purpose_education",3,0.625,0.5807127882599581
+"Job, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",6,0.625,0.5807127882599581
+"Job, Purpose_business, Purpose_car, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",7,0.625,0.5807127882599581
+"Job, Purpose_repairs",2,0.62,0.5735607675906184
+"Job, Purpose_vacation/others",2,0.62,0.5735607675906184
+Job,1,0.62,0.5735607675906184
+"Job, Purpose_business",2,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment",3,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment",2,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",5,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_domestic appliances",6,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances",5,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances",4,0.62,0.5735607675906184
+"Job, Purpose_repairs, Purpose_domestic appliances",3,0.62,0.5735607675906184
+"Job, Purpose_vacation/others, Purpose_domestic appliances",3,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances",5,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances",4,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_domestic appliances",3,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_domestic appliances",4,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_domestic appliances",3,0.62,0.5735607675906184
+"Job, Purpose_domestic appliances",2,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_repairs",3,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_repairs",4,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs",5,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs",4,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_vacation/others",3,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others",4,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_repairs",3,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_repairs, Purpose_education",5,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_education",3,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_education",4,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_education",5,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_education",4,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_repairs, Purpose_education",5,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_repairs, Purpose_education",4,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_domestic appliances, Purpose_education",5,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_domestic appliances, Purpose_education",4,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",5,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_vacation/others, Purpose_domestic appliances, Purpose_education",6,0.62,0.5735607675906184
+"Job, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances, Purpose_education",5,0.62,0.5735607675906184
+"Job, Purpose_business, Purpose_furniture/equipment, Purpose_repairs, Purpose_domestic appliances, Purpose_education",6,0.62,0.5735607675906184

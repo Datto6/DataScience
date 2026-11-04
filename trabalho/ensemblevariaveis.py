@@ -5,7 +5,7 @@ from itertools import combinations
 
 from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score,f1_score
 from sklearn.impute import KNNImputer
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
@@ -174,7 +174,9 @@ for mask in range(total_combinations):
     # ========================================================
     y_pred = grid.best_estimator_.predict(X_test)
     test_accuracy = accuracy_score(y_test,y_pred)
-
+    f1_good = f1_score(y_test, y_pred, pos_label=1)
+    f1_bad = f1_score(y_test, y_pred, pos_label=0)
+    f1_macro = f1_score(y_test, y_pred, average='macro')
     # ========================================================
     # SAVE RESULT
     # ========================================================
@@ -184,6 +186,7 @@ for mask in range(total_combinations):
         'num_removed': len(removed),
         'cv_accuracy': grid.best_score_,
         'test_accuracy': test_accuracy,
+        'F1_score': f1_macro,
         'best__max_depth':grid.best_params_['model__max_depth'],
         'best_n_estimators': grid.best_params_['model__n_estimators']
     })
@@ -196,7 +199,8 @@ for mask in range(total_combinations):
         f"[{mask + 1:3}/{total_combinations}] "
         f"Removed: {removed} | "
         f"CV: {grid.best_score_ * 100:.2f}% | "
-        f"Test: {test_accuracy * 100:.2f}%"
+        f"Test: {test_accuracy * 100:.2f}% | "
+        f"F1 Score: {f1_macro * 100:.2f}%"
     )
 
 
